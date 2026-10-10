@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מחשבון תמחור להדפסת תלת מימד</title>
+<meta name="description" content="מחשבון תמחור חינמי להדפסות תלת מימד: חומר, חשמל, בלאי, עיצוב והרכבה.">
+<meta name="theme-color" content="#0d1117">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="מחשבון תמחור">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--txt:#e6edf3;--mut:#8b949e;--acc:#2f81f7;--ok:#3fb950}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5;padding:0 0 110px}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px}
+h1{font-size:22px;margin:14px 0 6px;text-align:center}
+.sub{color:var(--mut);text-align:center;font-size:14px;margin:0 0 6px}
+.rate{text-align:center;font-size:12px;color:var(--mut);margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:17px;margin:0 0 12px;display:flex;gap:10px;align-items:center}
+.num{background:var(--acc);color:#fff;border-radius:8px;font-size:12px;padding:2px 8px}
+
+label{display:block;font-size:14px;margin:10px 0 4px}
+.hint{font-size:12px;color:var(--mut);margin-top:3px}
+.row{display:flex;gap:10px}.row>div{flex:1}
+.inp{display:flex;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:0 10px}
+.inp:focus-within{border-color:var(--acc)}
+.inp input{flex:1;min-width:0;background:none;border:0;color:var(--txt);font-size:16px;padding:11px 0;outline:none;text-align:right}
+.inp b{color:var(--mut);font-weight:400;font-size:13px;margin-right:6px}
+.chk{display:flex;gap:10px;align-items:center;cursor:pointer;margin:0 0 4px}
+.chk input{width:20px;height:20px;accent-color:var(--acc)}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+summary{cursor:pointer;font-weight:700}
+
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:12px;font-size:15px;font-weight:700;width:100%;cursor:pointer}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--mut);font-weight:400;font-size:13px;margin-top:12px}
+.res{border-color:var(--acc)}
+.big{font-size:44px;font-weight:800;color:var(--ok);text-align:center;margin:4px 0}
+.cap{text-align:center;color:var(--mut);font-size:13px}
+input[type=range]{width:100%;accent-color:var(--acc);direction:ltr}
+.pl{display:flex;justify-content:space-between;font-size:14px}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+td{padding:7px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:left;font-variant-numeric:tabular-nums}
+tr.t td{font-weight:700;border-bottom:0}
+.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(22,27,34,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;z-index:5}
+.bar .p{font-size:22px;font-weight:800;color:var(--ok)}
+.bar a{color:var(--acc);text-decoration:none;font-size:14px}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:16px}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.modal.on{display:flex}
+.mbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;width:100%;max-width:420px}
+.mbox input.t{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px;font-size:16px}
+#quote{display:none}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  .wrap,.bar,.modal{display:none!important}
+  #quote{display:block;max-width:680px;margin:0 auto;padding:30px;font-family:Arial,sans-serif}
+  #quote h2{margin:0;font-size:26px}
+  #quote table td{border-bottom:1px solid #ccc;padding:9px 0;font-size:15px}
+  #quote .tot{font-size:30px;font-weight:800;margin:20px 0}
+  #quote small{color:#555}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>מחשבון תמחור להדפסת תלת מימד</h1>
+  <p class="sub">מזינים פילמנט, משקל וזמנים. חשמל, בלאי ומרווח כשלים מחושבים אוטומטית.</p>
+  <div class="rate">תעריף חשמל 63.52 אג׳ לקוט״ש · מ-1.7.2026</div>
+
+  <div class="card">
+    <h2><span class="num">01</span>חומר והדפסה</h2>
+    <label>מחיר פילמנט לק״ג</label>
+    <div class="inp"><input id="fp" type="number" inputmode="decimal" value="90"><b>₪/ק״ג</b></div>
+    <label>משקל המודל</label>
+    <div class="inp"><input id="wt" type="number" inputmode="decimal" placeholder="0"><b>גרם</b></div>
+    <div class="hint">כולל תמיכות, לפי הסלייסר</div>
+    <label>זמן הדפסה</label>
+    <div class="row">
+      <div><div class="inp"><input id="ph" type="number" inputmode="numeric" placeholder="0"><b>שעות</b></div></div>
+      <div><div class="inp"><input id="pm" type="number" inputmode="numeric" placeholder="0"><b>דקות</b></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">02</span>עיצוב ועריכה</h2>
+    <label>זמן עיצוב ועריכה</label>
+    <div class="inp"><input id="dh" type="number" inputmode="decimal" placeholder="0"><b>שעות</b></div>
+    <div class="hint">0.5 = חצי שעה</div>
+    <label>תעריף לשעה</label>
+    <div class="inp"><input id="dr" type="number" inputmode="decimal" value="50"><b>₪/שעה</b></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">03</span>הרכבה וגימור</h2>
+    <label class="chk"><input id="ae" type="checkbox"> המוצר דורש הרכבה או גימור ידני</label>
+    <div id="abox" style="display:none">
+      <label>זמן הרכבה</label>
+      <div class="inp"><input id="ah" type="number" inputmode="decimal" placeholder="0"><b>שעות</b></div>
+      <label>תעריף לשעה</label>
+      <div class="inp"><input id="ar" type="number" inputmode="decimal" value="40"><b>₪/שעה</b></div>
+      <label>חלקים נוספים</label>
+      <div class="inp"><input id="ax" type="number" inputmode="decimal" placeholder="0"><b>₪</b></div>
+      <div class="hint">מגנטים, ברגים, דבק, אריזה</div>
+    </div>
+  </div>
+
+  <details>
+    <summary>⚙ הגדרות מתקדמות: חשמל ובלאי</summary>
+    <label>מחיר חשמל לקוט״ש</label>
+    <div class="inp"><input id="ep" type="number" inputmode="decimal" step="0.0001" value="0.6352"><b>₪</b></div>
+    <div class="hint">תעריף ביתי כולל מע״מ</div>
+    <label>צריכת מדפסת ממוצעת</label>
+    <div class="inp"><input id="pw" type="number" inputmode="numeric" value="150"><b>וואט</b></div>
+    <div class="hint">רוב מדפסות FDM: ‏100–200W</div>
+    <label>מחיר המדפסת</label>
+    <div class="inp"><input id="pp" type="number" inputmode="decimal" value="2500"><b>₪</b></div>
+    <label>אורך חיים צפוי</label>
+    <div class="inp"><input id="pl" type="number" inputmode="numeric" value="5000"><b>שעות</b></div>
+    <label>תחזוקה וחלפים</label>
+    <div class="inp"><input id="mt" type="number" inputmode="decimal" value="0.5"><b>₪/שעה</b></div>
+    <div class="hint">פיות, משטחים, רצועות</div>
+    <label>מרווח כשלים</label>
+    <div class="inp"><input id="fm" type="number" inputmode="decimal" value="10"><b>%</b></div>
+    <div class="hint">על חומר, חשמל ובלאי</div>
+    <div class="hint" style="margin-top:12px">בלאי לשעה = מחיר המדפסת ÷ אורך החיים + תחזוקה. ההגדרות נשמרות בדפדפן שלך.</div>
+    <button class="btn ghost" id="reset">איפוס לברירת מחדל</button>
+  </details>
+
+  <div class="card res" id="result">
+    <div class="cap">מחיר מומלץ ללקוח</div>
+    <div class="big" id="price">₪0</div>
+    <div class="pl"><span>רווח על עלות הייצור</span><b id="pv">50%</b></div>
+    <input id="pr" type="range" min="0" max="300" step="5" value="50">
+    <div class="hint">הרווח מתווסף לחומר, חשמל ובלאי. זמן העבודה כבר מתומחר לפי שעה.</div>
+    <h2 style="margin-top:18px;font-size:15px">פירוט עלויות</h2>
+    <table id="tb"></table>
+    <button class="btn" id="qbtn" style="margin-top:16px">הפק הצעת מחיר כקבלה / PDF</button>
+  </div>
+  <div class="foot">המחשבון נותן הערכה. המחיר הסופי בהתאם לפרויקט.</div>
+</div>
+
+<div class="bar"><div><div class="cap" style="text-align:right">מחיר מומלץ</div><div class="p" id="bp">₪0</div></div><a href="#result">לפירוט</a></div>
+
+<div class="modal" id="modal"><div class="mbox">
+  <h2 style="margin-top:0">הצעת מחיר</h2>
+  <label>שם המוצר</label><input class="t" id="qn">
+  <label>שם הלקוח</label><input class="t" id="qc">
+  <div class="row" style="margin-top:16px">
+    <div><button class="btn" id="qpdf">שמור כ-PDF</button></div>
+    <div><button class="btn ghost" id="qx" style="margin:0">סגור</button></div>
+  </div>
+</div></div>
+
+<div id="quote">
+  <h2>הצעת מחיר</h2>
+  <p id="qd"></p>
+  <table id="qt"></table>
+  <div class="tot" id="qtot"></div>
+  <small>הצעת מחיר בלבד · אינה קבלה או חשבונית מס</small>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:2500,pl:5000,mt:0.5,fm:10,pr:50};
+const SAVE=Object.keys(DEF);
+const n=id=>parseFloat($(id).value)||0;
+const f=v=>"₪"+v.toLocaleString("he-IL",{minimumFractionDigits:2,maximumFractionDigits:2});
+let rows=[],total=0,price=0;
+
+// טעינת נתונים שמורים
+function load(){
+  try{const s=JSON.parse(localStorage.getItem("calc3d")||"{}");SAVE.forEach(k=>{if(s[k]!==undefined)$(k).value=s[k]});}catch(e){}
+}
+
+// שמירת נתונים
+function save(){
+  try{const o={};SAVE.forEach(k=>o[k]=$(k).value);localStorage.setItem("calc3d",JSON.stringify(o));}catch(e){}
+}
+
+// חישוב העלויות
+function calc(){
+  const hours=n("ph")+n("pm")/60;
+  const mat=n("fp")/1000*n("wt");
+  const elec=n("pw")/1000*hours*n("ep");
+  const wear=hours*((n("pl")>0?n("pp")/n("pl"):0)+n("mt"));
+  const fail=(mat+elec+wear)*n("fm")/100;
+  const prod=mat+elec+wear+fail;
+  const design=n("dh")*n("dr");
+  const on=$("ae").checked;
+  const assem=on?n("ah")*n("ar"):0;
+  const parts=on?n("ax"):0;
+  
+  total=prod+design+assem+parts;
+  const profit=prod*n("pr")/100;
+  price=total+profit;
+  $("pv").textContent=n("pr")+"%";
+  
+  rows=[
+    ["חומר (פילמנט)",mat],
+    ["חשמל",elec],
+    ["בלאי מדפסת",wear],
+    ["מרווח כשלים",fail],
+    ["עיצוב ועריכה",design],
+    ["הרכבה וגימור",assem],
+    ["חלקים נוספים",parts]
+  ].filter(r=>r[1]>0);
+  
+  let h=rows.map(r=>`<tr><td>${r[0]}</td><td>${f(r[1])}</td></tr>`).join("");
+  h+=`<tr class="t"><td>עלות כוללת (לפני רווח)</td><td>${f(total)}</td></tr>`;
+  h+=`<tr><td>רווח</td><td>${f(profit)}</td></tr>`;
+  $("tb").innerHTML=h;
+  
+  const p="₪"+Math.round(price).toLocaleString("he-IL");
+  $("price").textContent=p;$("bp").textContent=p;
+}
+
+// מאזינים לאירועים
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{calc();save();}));
+$("ae").addEventListener("change",()=>{$("abox").style.display=$("ae").checked?"block":"none";calc();});
+$("reset").onclick=()=>{SAVE.forEach(k=>$(k).value=DEF[k]);save();calc();};
+
+// טיפול בהצעת מחיר והדפסה
+$("qbtn").onclick=()=>$("modal").classList.add("on");
+$("qx").onclick=()=>$("modal").classList.remove("on");
+$("qpdf").onclick=()=>{
+  const d=new Date().toLocaleDateString("he-IL");
+  $("qd").innerHTML=`תאריך: ${d}`+($("qc").value?`<br>לכבוד: ${$("qc").value}`:"")+($("qn").value?`<br>מוצר: <b>${$("qn").value}</b>`:"");
+  const q=Math.round(price);
+  $("qt").innerHTML=`<tr><td>${$("qn").value||"הדפסת תלת מימד"}</td><td style="text-align:left">₪${q.toLocaleString("he-IL")}</td></tr>`;
+  $("qtot").textContent="סה״כ: ₪"+q.toLocaleString("he-IL");
+  $("modal").classList.remove("on");
+  setTimeout(()=>window.print(),100);
+};
+
+// אתחול
+load();calc();
+</script>
+</body>
+</html>
