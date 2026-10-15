@@ -101,7 +101,7 @@ tr.t td{font-weight:700}
     <div class="inp"><input id="pw" type="text" inputmode="numeric" value="150"><b>וואט</b></div>
     <div class="hint">רוב מדפסות FDM: ‏100–200W</div>
     <label>מחיר המדפסת</label>
-    <div class="inp"><input id="pp" type="text" inputmode="decimal" value="2500"><b>₪</b></div>
+    <div class="inp"><input id="pp" type="text" inputmode="decimal" value="3000"><b>₪</b></div>
     <label>אורך חיים צפוי</label>
     <div class="inp"><input id="pl" type="text" inputmode="numeric" value="5000"><b>שעות</b></div>
     <label>תחזוקה וחלפים</label>
@@ -131,9 +131,9 @@ tr.t td{font-weight:700}
 
 <script>
 const $=id=>document.getElementById(id);
-const V=1; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
+const V=2; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
 const VAT=0.18;
-const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:2500,pl:5000,mt:0.5,fm:10,pr:50};
+const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:3000,pl:5000,mt:0.5,fm:10,pr:50};
 const SAVE=Object.keys(DEF);
 // קורא מספר: מקבל גם פסיק עשרוני (0,5) ולא מאפשר ערכים שליליים
 const n=id=>Math.max(0,parseFloat(String($(id).value).replace(",","."))||0);
