@@ -58,7 +58,7 @@ tr.t td{font-weight:700}
   <div class="card">
     <h2>חומר והדפסה</h2>
     <label>מחיר פילמנט לק״ג</label>
-    <div class="inp"><input id="fp" type="text" inputmode="decimal" value="90"><b>₪/ק״ג</b></div>
+    <div class="inp"><input id="fp" type="text" inputmode="decimal" value="100"><b>₪/ק״ג</b></div>
     <label>משקל המודל</label>
     <div class="inp"><input id="wt" type="text" inputmode="decimal" placeholder="0"><b>גרם</b></div>
     <div class="hint">כולל תמיכות, לפי הסלייסר</div>
@@ -75,7 +75,7 @@ tr.t td{font-weight:700}
     <div class="inp"><input id="dh" type="text" inputmode="decimal" placeholder="0"><b>שעות</b></div>
     <div class="hint">0.5 = חצי שעה</div>
     <label>תעריף לשעה</label>
-    <div class="inp"><input id="dr" type="text" inputmode="decimal" value="50"><b>₪/שעה</b></div>
+    <div class="inp"><input id="dr" type="text" inputmode="decimal" value="80"><b>₪/שעה</b></div>
   </div>
 
   <div class="card">
@@ -85,7 +85,7 @@ tr.t td{font-weight:700}
       <label>זמן הרכבה</label>
       <div class="inp"><input id="ah" type="text" inputmode="decimal" placeholder="0"><b>שעות</b></div>
       <label>תעריף לשעה</label>
-      <div class="inp"><input id="ar" type="text" inputmode="decimal" value="40"><b>₪/שעה</b></div>
+      <div class="inp"><input id="ar" type="text" inputmode="decimal" value="60"><b>₪/שעה</b></div>
       <label>חלקים נוספים</label>
       <div class="inp"><input id="ax" type="text" inputmode="decimal" placeholder="0"><b>₪</b></div>
       <div class="hint">מגנטים, ברגים, דבק, אריזה</div>
@@ -103,12 +103,12 @@ tr.t td{font-weight:700}
     <label>מחיר המדפסת</label>
     <div class="inp"><input id="pp" type="text" inputmode="decimal" value="3000"><b>₪</b></div>
     <label>אורך חיים צפוי</label>
-    <div class="inp"><input id="pl" type="text" inputmode="numeric" value="5000"><b>שעות</b></div>
+    <div class="inp"><input id="pl" type="text" inputmode="numeric" value="4000"><b>שעות</b></div>
     <label>תחזוקה וחלפים</label>
-    <div class="inp"><input id="mt" type="text" inputmode="decimal" value="0.5"><b>₪/שעה</b></div>
+    <div class="inp"><input id="mt" type="text" inputmode="decimal" value="1"><b>₪/שעה</b></div>
     <div class="hint">פיות, משטחים, רצועות</div>
     <label>מרווח כשלים</label>
-    <div class="inp"><input id="fm" type="text" inputmode="decimal" value="10"><b>%</b></div>
+    <div class="inp"><input id="fm" type="text" inputmode="decimal" value="15"><b>%</b></div>
     <div class="hint">על חומר, חשמל ובלאי</div>
     <div class="hint" style="margin-top:12px">בלאי לשעה = מחיר המדפסת ÷ אורך החיים + תחזוקה. ההגדרות נשמרות בדפדפן שלך.</div>
     <button class="btn ghost" id="reset">איפוס לברירת מחדל</button>
@@ -131,9 +131,9 @@ tr.t td{font-weight:700}
 
 <script>
 const $=id=>document.getElementById(id);
-const V=3; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
+const V=4; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
 const VAT=0.18;
-const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:3000,pl:5000,mt:0.5,fm:10,pr:100};
+const DEF={fp:100,dr:80,ar:60,ep:0.6352,pw:150,pp:3000,pl:4000,mt:1,fm:15,pr:100};
 const SAVE=Object.keys(DEF);
 // קורא מספר: מקבל גם פסיק עשרוני (0,5) ולא מאפשר ערכים שליליים
 const n=id=>Math.max(0,parseFloat(String($(id).value).replace(",","."))||0);
