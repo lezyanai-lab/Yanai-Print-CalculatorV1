@@ -118,8 +118,8 @@ tr.t td{font-weight:700}
     <div class="cap" id="cap">מחיר מומלץ ללקוח (לפני מע״מ)</div>
     <div class="big" id="price">₪0</div>
     <label class="chk" style="margin-top:10px"><input id="vat" type="checkbox"> הוסף מע״מ 18%</label>
-    <div class="pl" style="margin-top:12px"><span>רווח על עלות הייצור</span><b id="pv">50%</b></div>
-    <input id="pr" type="range" min="0" max="300" step="5" value="50">
+    <div class="pl" style="margin-top:12px"><span>רווח על עלות הייצור</span><b id="pv">100%</b></div>
+    <input id="pr" type="range" min="0" max="300" step="5" value="100">
     <div class="hint">הרווח מתווסף לחומר, חשמל, בלאי ומרווח כשלים בלבד. עיצוב, הרכבה וחלקים נוספים מתומחרים כמות שהם, בלי תוספת רווח.</div>
     <h2 style="margin-top:18px;font-size:15px">פירוט עלויות</h2>
     <table id="tb"></table>
@@ -131,9 +131,9 @@ tr.t td{font-weight:700}
 
 <script>
 const $=id=>document.getElementById(id);
-const V=2; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
+const V=3; // להעלות את המספר רק כשרוצים לאפס הגדרות שמורות אצל כולם
 const VAT=0.18;
-const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:3000,pl:5000,mt:0.5,fm:10,pr:50};
+const DEF={fp:90,dr:50,ar:40,ep:0.6352,pw:150,pp:3000,pl:5000,mt:0.5,fm:10,pr:100};
 const SAVE=Object.keys(DEF);
 // קורא מספר: מקבל גם פסיק עשרוני (0,5) ולא מאפשר ערכים שליליים
 const n=id=>Math.max(0,parseFloat(String($(id).value).replace(",","."))||0);
