@@ -1,10 +1,10 @@
 {
-  "id": "yanai-print-calculator-v2",
+  "id": "/Yanai-Print-CalculatorV1/?app=calc-v1",
   "name": "מחשבון תמחור להדפסת תלת מימד",
   "short_name": "מחשבון תמחור",
   "lang": "he",
   "dir": "rtl",
-  "start_url": "./",
+  "start_url": "./?app=calc-v1",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0d1117",
